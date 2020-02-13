@@ -15,9 +15,9 @@ public class TeachersService {
 	private TeachersRepository teachersRepository;
 
 	public List<Teacher> getTeachers() {
-		List<Teacher> marks = new ArrayList<Teacher>();
-		teachersRepository.findAll().forEach(marks::add);
-		return marks;
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		teachersRepository.findAll().forEach(teachers::add);
+		return teachers;
 	}
 
 	public Teacher getTeacher(Long id) {
