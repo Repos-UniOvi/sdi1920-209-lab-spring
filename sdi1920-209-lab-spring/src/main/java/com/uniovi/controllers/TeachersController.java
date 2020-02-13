@@ -16,10 +16,15 @@ public class TeachersController {
 	private TeachersService teachersService;
 
 	@RequestMapping("/teacher/list")
-	public String getTeacher() {
+	public String getList() {
 		return teachersService.getTeachers().toString();
 	}
-
+	
+	@RequestMapping(value = "/teacher/add")
+	public String getTeacher() {
+		return "Adding teacher";
+	}
+	
 	@RequestMapping(value = "/teacher/add", method = RequestMethod.POST)
 	public String setTeacher(@ModelAttribute Teacher teacher) {
 		teachersService.addTeacher(teacher);
@@ -36,7 +41,11 @@ public class TeachersController {
 		teachersService.deleteTeacher(id);
 		return "OK";
 	}
-
+	
+	@RequestMapping(value = "/teacher/edit&{id}")
+	public String getEdit() {
+		return "teacher/edit/{id}";
+	}
 	@RequestMapping(value = "/teacher/edit/{id}", method = RequestMethod.POST)
 	public String setEdit(@PathVariable Long id) {
 		return "Editing Teacher" + id;
