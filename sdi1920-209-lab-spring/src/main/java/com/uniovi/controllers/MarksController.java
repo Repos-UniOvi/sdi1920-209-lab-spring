@@ -44,12 +44,14 @@ public class MarksController {
 		marksService.deleteMark(id);
 		return "redirect:/mark/list";
 	}
-	
+
 	@RequestMapping(value = "/mark/edit/{id}")
-	public String getMarkEdit() {
+	public String getEdit(Model model, @PathVariable Long id) {
+		model.addAttribute("mark", marksService.getMark(id));
 		return "mark/edit";
+
 	}
-	
+
 	@RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
 	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Mark mark) {
 		mark.setId(id);
