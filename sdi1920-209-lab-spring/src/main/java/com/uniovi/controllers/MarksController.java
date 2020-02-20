@@ -53,7 +53,7 @@ public class MarksController {
 	@RequestMapping(value = "/mark/edit/{id}")
 	public String getEdit(Model model, @PathVariable Long id) {
 		model.addAttribute("mark", marksService.getMark(id));
-		model.addAttribute("mark", marksService.getMark(id));
+		//model.addAttribute("mark", marksService.getMark(id));
 		model.addAttribute("usersList", usersService.getUsers());
 		return "mark/edit";
 
@@ -67,5 +67,11 @@ public class MarksController {
 		original.setDescription(mark.getDescription());
 		marksService.addMark(original);
 		return "redirect:/mark/details/" + id;
+	}
+	
+	@RequestMapping("/mark/details/{id}")
+	public String getDetail(Model model, @PathVariable Long id) {
+		model.addAttribute("mark", marksService.getMark(id));
+		return "mark/details/"+id;
 	}
 }
