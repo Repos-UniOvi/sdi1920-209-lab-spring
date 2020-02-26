@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.Mark;
+import com.uniovi.entities.User;
 import com.uniovi.services.MarksService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.MarkFormValidator;
@@ -31,8 +34,10 @@ public class MarksController {
 	private HttpSession httpSession;
 
 	@RequestMapping("/mark/list")
-	public String getList(Model model) {
-		model.addAttribute("markList", marksService.getMarks());
+	public String getList(Model model, Principal principal){
+		String dni = principal.getName(); // DNI es el name de la autenticación
+		User user = usersService.getUserByDni(dni);
+		model.addAttribute("markList", marksService.getMarksForUser(user) );
 		return "mark/list";
 	}
 
@@ -61,8 +66,10 @@ public class MarksController {
 	}
 
 	@RequestMapping("/mark/list/update")
-	public String updateList(Model model) {
-		model.addAttribute("markList", marksService.getMarks());
+	public String updateList(Model model, Principal principal){
+		String dni = principal.getName(); // DNI es el name de la autenticación
+		User user = usersService.getUserByDni(dni);
+		model.addAttribute("markList", marksService.getMarksForUser(user));
 		return "mark/list :: tableMarks";
 	}
 
