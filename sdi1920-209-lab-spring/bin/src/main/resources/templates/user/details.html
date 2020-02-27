@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2>Detalles del usuario</h2>
+		<div class="panel panel-default">
+			<div class="panel-heading">DNI</div>
+			<div class="panel-body" th:text="${user.dni}">28276</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Name</div>
+			<div class="panel-body" th:text="${user.name}">
+				Ejercicio 1</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Last Name</div>
+			<div class="panel-body" th:text="${user.lastName}">100</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Role</div>
+			<div class="panel-body" th:text="${user.role}">100</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
