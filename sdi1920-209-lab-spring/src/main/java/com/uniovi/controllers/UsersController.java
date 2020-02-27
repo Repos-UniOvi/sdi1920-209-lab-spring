@@ -1,6 +1,8 @@
 package com.uniovi.controllers;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Mark;
 import com.uniovi.entities.User;
@@ -32,19 +35,24 @@ public class UsersController {
 
 	@Autowired
 	private SecurityService securityService;
-	 
+
 	@Autowired
 	private RolesService rolesService;
 
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
-	
+
 	@Autowired
 	private MarksService marksService;
 
 	@RequestMapping("/user/list")
-	public String getListado(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+	public String getListado(Model model, @RequestParam(value = "", required = false) String searchText) {
+		List<User> users = new ArrayList<User>();
+		if (searchText != null && !searchText.isEmpty()) {
+			users= usersService.getUserByNameAndSurname(searchText);
+		} else
+			users= usersService.getUsers();
+		model.addAttribute("usersList", users);
 		return "user/list";
 	}
 
@@ -65,13 +73,13 @@ public class UsersController {
 		model.addAttribute("user", usersService.getUser(id));
 		return "user/details";
 	}
-	
+
 	@RequestMapping("/user/list/update")
 	public String updateList(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
 		return "user/list :: tableUsers";
 	}
-	
+
 	@RequestMapping("/user/delete/{id}")
 	public String delete(@PathVariable Long id) {
 		usersService.deleteUser(id);
@@ -88,7 +96,7 @@ public class UsersController {
 	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
 	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
 		User original = usersService.getUser(id);
-		
+
 		original.setDni(user.getDni());
 		original.setName(user.getName());
 		original.setLastName(user.getLastName());
@@ -123,13 +131,12 @@ public class UsersController {
 	public String home(Model model, Pageable pageable) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String dni = auth.getName();
-		
+
 		User activeUser = usersService.getUserByDni(dni);
-		
+
 		Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
 		marks = marksService.getMarksForUser(pageable, activeUser);
-		
-		
+
 		model.addAttribute("markList", marks.getContent());
 		model.addAttribute("page", marks);
 		return "home";
