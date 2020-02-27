@@ -32,9 +32,9 @@
 	    <td th:text="${teacher.name}"> Ejercicio 2</td>
 	    <td th:text="${teacher.surname}">10</td>
 	    <td th:text="${teacher.category}">10</td>
-	    <td><a th:href="${'/teacher/details/' + teacher.id}">detalles</a></td>
-	    <td><a th:href="${'/teacher/edit/' + teacher.id}">modificar</a></td>
-	    <td><a th:href="${'/teacher/delete/' + teacher.id}">eliminar</a></td>
+	    <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_PROFESSOR')"><a th:href="${'/teacher/details/' + teacher.id}">detalles</a></td>
+	    <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="${'/teacher/edit/' + teacher.id}">modificar</a></td>
+	    <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="${'/teacher/delete/' + teacher.id}">eliminar</a></td>
 	  </tr>
 	</tbody>
   </table>
