@@ -27,7 +27,8 @@ public class NotaneitorTests {
 
 	// LINUX
 	static String PathFirefox65 = "/usr/bin/firefox";
-	static String Geckdriver024 = "/usr/bin/geckodriver";
+	//static String Geckdriver024 = "/usr/bin/geckodriver"; //Repo
+	static String Geckdriver024 = "/home/danielm/Descargas/PL-SDI-Sesión5-material/PL-SDI-Sesión5-material/geckodriver024win64.exe";
 //Común a Windows y a MACOSX
 
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
