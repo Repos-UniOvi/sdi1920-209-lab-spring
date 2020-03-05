@@ -40,7 +40,7 @@ public class NotaneitorTests {
 	// LINUX
 	static String PathFirefox65 = "/usr/bin/firefox";
 	// static String Geckdriver024 = "/usr/bin/geckodriver"; //Repo
-	static String Geckdriver024 = "/home/danielm/Descargas/PL-SDI-Sesión5-material/PL-SDI-Sesión5-material/geckodriver024win64.exe";
+	static String Geckdriver024 = "/home/danielm/Descargas/PL-SDI-Sesión5-material/PL-SDI-Sesión5-material/geckodriver";
 //Común a Windows y a MACOSX
 
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
@@ -259,7 +259,7 @@ public class NotaneitorTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 		SeleniumUtils.esperarSegundos(driver, 1);
 		// Contamos las notas
-		By enlace = By.xpath("//td[contains(text(), 'Nota A2')]/followingsibling::*[2]");
+		By enlace = By.xpath("//td[contains(text(), 'Nota A2')]/following-sibling::*[2]");
 		driver.findElement(enlace).click();
 		SeleniumUtils.esperarSegundos(driver, 1);
 		// Esperamos por la ventana de detalle
@@ -317,7 +317,7 @@ public class NotaneitorTests {
 		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/list')]");
 		elementos.get(0).click();
 		// Esperamos a que se muestren los enlaces de paginacion la lista de notas
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'pagelink')]");
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
 		// Nos vamos a la última página
 		elementos.get(3).click();
 		// Esperamos a que aparezca la Nueva nota en la ultima pagina
@@ -328,7 +328,7 @@ public class NotaneitorTests {
 				"//td[contains(text(), 'Nota Nueva 1')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
 		elementos.get(0).click();
 		// Volvemos a la última pagina
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'pagelink')]");
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
 		elementos.get(3).click();
 		// Y esperamos a que NO aparezca la ultima "Nueva Nota 1"
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Nota Nueva 1", PO_View.getTimeout());
